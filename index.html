@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reservas Turísticas | Parque Nacional Cotopaxi</title>
+    <meta name="description" content="Reserva tu visita al Parque Nacional Cotopaxi: caminatas, ciclismo, cabalgatas y fotografía con guías locales.">
+
+    <!-- Bootstrap 5 y Bootstrap Icons (únicos recursos de diseño) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body class="bg-body-tertiary">
+
+<!-- NAVEGACIÓN -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-success sticky-top shadow">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="#inicio"><i class="bi bi-mountains text-warning me-2"></i>COTOPAXI TOUR</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Abrir menú">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menu">
+            <ul class="navbar-nav ms-auto gap-lg-2">
+                <li class="nav-item"><a class="nav-link" href="#tours">Experiencias</a></li>
+                <li class="nav-item"><a class="nav-link" href="#reservar">Reservar</a></li>
+                <li class="nav-item"><a class="nav-link" href="#consejos">Consejos</a></li>
+                <li class="nav-item"><a class="nav-link" href="#preguntas">Preguntas</a></li>
+                <li class="nav-item"><a class="nav-link" href="#misreservas">Mis reservas <span id="contador" class="badge text-bg-warning">0</span></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- PORTADA -->
+<header id="inicio" class="position-relative text-white text-center overflow-hidden">
+    <img src="https://www.goecuadortravel.com/archivos/destinos/cotopaxi-1200x600-1_Mediano.jpg" alt="Volcán Cotopaxi" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover">
+    <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-50"></div>
+    <div class="container position-relative py-5">
+        <div class="py-5">
+            <span class="badge rounded-pill text-bg-warning mb-3 fs-6"><i class="bi bi-compass me-1"></i>Ecuador · Ama la Vida</span>
+            <h1 class="display-3 fw-bold text-uppercase">Reserva tu aventura en el <span class="text-warning">Cotopaxi</span></h1>
+            <p class="lead col-lg-8 mx-auto mb-4">A 5.897 m de altura, uno de los volcanes activos más altos del mundo te espera. Elige tu experiencia, fecha y servicios en menos de dos minutos.</p>
+            <a href="#reservar" class="btn btn-warning btn-lg rounded-pill fw-bold px-5">Reservar ahora <i class="bi bi-arrow-down-circle ms-2"></i></a>
+        </div>
+    </div>
+</header>
+
+<!-- DATOS RÁPIDOS -->
+<section class="container my-5">
+    <div class="row g-3 text-center">
+        <div class="col-6 col-md-3"><div class="card h-100 border-0 shadow-sm"><div class="card-body"><i class="bi bi-geo-alt-fill fs-1 text-success"></i><h5 class="card-title mt-2">Ubicación</h5><p class="card-text text-body-secondary mb-0">Provincias de Cotopaxi, Pichincha y Napo</p></div></div></div>
+        <div class="col-6 col-md-3"><div class="card h-100 border-0 shadow-sm"><div class="card-body"><i class="bi bi-graph-up-arrow fs-1 text-success"></i><h5 class="card-title mt-2">Altitud</h5><p class="card-text text-body-secondary mb-0">5.897 m s. n. m.</p></div></div></div>
+        <div class="col-6 col-md-3"><div class="card h-100 border-0 shadow-sm"><div class="card-body"><i class="bi bi-clock-fill fs-1 text-success"></i><h5 class="card-title mt-2">Mejor horario</h5><p class="card-text text-body-secondary mb-0">Mañanas: cielo más despejado</p></div></div></div>
+        <div class="col-6 col-md-3"><div class="card h-100 border-0 shadow-sm"><div class="card-body"><i class="bi bi-shield-check fs-1 text-success"></i><h5 class="card-title mt-2">Seguridad</h5><p class="card-text text-body-secondary mb-0">Guías locales y rutas autorizadas</p></div></div></div>
+    </div>
+</section>
+
+<!-- EXPERIENCIAS -->
+<section id="tours" class="container my-5">
+    <div class="text-center mb-4">
+        <h6 class="text-success text-uppercase fw-bold">Nuestras experiencias</h6>
+        <h2 class="fw-bold">Elige cómo quieres vivir el Cotopaxi</h2>
+        <p class="text-body-secondary">Cada experiencia incluye guía local, seguro de actividad y botiquín de primeros auxilios.</p>
+    </div>
+    <div class="row g-4" id="listaTours"></div>
+</section>
+
+<!-- FORMULARIO DE RESERVA -->
+<section id="reservar" class="container my-5">
+    <div class="text-center mb-4">
+        <h6 class="text-success text-uppercase fw-bold">Reservación en línea</h6>
+        <h2 class="fw-bold">Completa tu reserva</h2>
+        <p class="text-body-secondary">El total se calcula automáticamente mientras llenas el formulario.</p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <form id="formReserva" class="card border-0 shadow p-3 p-md-4 needs-validation" novalidate>
+
+                <h4 class="text-success border-bottom pb-2 mb-3"><span class="badge text-bg-success me-2">1</span>Datos del visitante</h4>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <label for="nombre" class="form-label fw-semibold"><i class="bi bi-person me-1"></i>Nombre completo</label>
+                        <input type="text" class="form-control" id="nombre" minlength="5" autocomplete="name" required>
+                        <div class="invalid-feedback">Ingresa tu nombre y apellido.</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="procedencia" class="form-label fw-semibold"><i class="bi bi-geo-alt me-1"></i>Lugar de procedencia</label>
+                        <select class="form-select" id="procedencia" required>
+                            <option value="" selected disabled>Selecciona una opción</option>
+                            <option>Quito</option>
+                            <option>Latacunga</option>
+                            <option>Otra ciudad del Ecuador</option>
+                            <option>Otro país</option>
+                        </select>
+                        <div class="invalid-feedback">Selecciona tu procedencia.</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="email" class="form-label fw-semibold"><i class="bi bi-envelope me-1"></i>Correo electrónico</label>
+                        <input type="email" class="form-control" id="email" autocomplete="email" required>
+                        <div class="invalid-feedback">Ingresa un correo válido.</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="telefono" class="form-label fw-semibold"><i class="bi bi-telephone me-1"></i>Teléfono</label>
+                        <input type="tel" class="form-control" id="telefono" pattern="[0-9]{10}" maxlength="10" inputmode="numeric" autocomplete="tel" required>
+                        <div class="invalid-feedback">Ingresa 10 dígitos sin espacios ni guiones.</div>
+                    </div>
+                </div>
+
+                <h4 class="text-success border-bottom pb-2 mb-3"><span class="badge text-bg-success me-2">2</span>Tu experiencia</h4>
+                <div class="row g-3 mb-4">
+                    <div class="col-12">
+                        <label for="tour" class="form-label fw-semibold"><i class="bi bi-signpost-split me-1"></i>Experiencia</label>
+                        <select class="form-select" id="tour" required></select>
+                        <div class="invalid-feedback">Elige una experiencia.</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="fecha" class="form-label fw-semibold"><i class="bi bi-calendar-event me-1"></i>Fecha de la visita</label>
+                        <input type="date" class="form-control" id="fecha" required>
+                        <div class="invalid-feedback">Elige una fecha desde hoy en adelante.</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="hora" class="form-label fw-semibold"><i class="bi bi-alarm me-1"></i>Hora de inicio</label>
+                        <select class="form-select" id="hora" required>
+                            <option value="" selected disabled>Selecciona un horario</option>
+                            <option>06:00</option>
+                            <option>07:30</option>
+                            <option>09:00</option>
+                            <option>11:00</option>
+                        </select>
+                        <div class="invalid-feedback">Elige un horario.</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="adultos" class="form-label fw-semibold"><i class="bi bi-people me-1"></i>Adultos (desde 12 años)</label>
+                        <input type="number" class="form-control" id="adultos" min="1" max="15" value="1" required>
+                        <div class="invalid-feedback">Mínimo 1 y máximo 15 adultos.</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="ninos" class="form-label fw-semibold"><i class="bi bi-emoji-smile me-1"></i>Niños (5 a 11 años, 50 % de descuento)</label>
+                        <input type="number" class="form-control" id="ninos" min="0" max="10" value="0" required>
+                        <div class="invalid-feedback">Máximo 10 niños.</div>
+                    </div>
+                </div>
+
+                <h4 class="text-success border-bottom pb-2 mb-3"><span class="badge text-bg-success me-2">3</span>Servicios adicionales</h4>
+                <div class="row g-3 mb-4" id="extras"></div>
+
+                <h4 class="text-success border-bottom pb-2 mb-3"><span class="badge text-bg-success me-2">4</span>Observaciones</h4>
+                <div class="mb-4">
+                    <label for="notas" class="form-label fw-semibold">Alergias, movilidad reducida u otra información importante</label>
+                    <textarea class="form-control" id="notas" rows="3" maxlength="500"></textarea>
+                </div>
+
+                <div class="alert alert-success d-flex gap-3" role="note">
+                    <i class="bi bi-heart-fill fs-4"></i>
+                    <div><strong>Compromiso con la naturaleza.</strong> No dejes basura, respeta la fauna y la flora, permanece en las rutas autorizadas y sigue las indicaciones de los guardaparques.</div>
+                </div>
+
+                <div class="form-check mb-4">
+                    <input class="form-check-input" type="checkbox" id="acepto" required>
+                    <label class="form-check-label" for="acepto">Acepto las normas del parque y entiendo que, por la altura, debo consultar a un médico si tengo problemas cardíacos o respiratorios.</label>
+                    <div class="invalid-feedback">Debes aceptar para continuar.</div>
+                </div>
+
+                <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+                    <button type="reset" class="btn btn-outline-success rounded-pill px-4"><i class="bi bi-arrow-counterclockwise me-2"></i>Limpiar</button>
+                    <button type="submit" class="btn btn-success btn-lg rounded-pill px-5 fw-bold">Confirmar reserva <i class="bi bi-check2-circle ms-2"></i></button>
+                </div>
+            </form>
+        </div>
+
+        <!-- RESUMEN -->
+        <aside class="col-lg-4">
+            <div class="card border-0 shadow sticky-top" style="top: 90px">
+                <div class="card-header bg-success text-white fw-bold"><i class="bi bi-receipt me-2"></i>Resumen de tu reserva</div>
+                <ul class="list-group list-group-flush" id="resumen"></ul>
+                <div class="card-footer d-flex justify-content-between align-items-center fs-5 fw-bold">
+                    <span>Total</span><span class="text-success" id="total">$0,00</span>
+                </div>
+            </div>
+        </aside>
+    </div>
+</section>
+
+<!-- CONSEJOS -->
+<section id="consejos" class="container my-5">
+    <div class="text-center mb-4">
+        <h6 class="text-success text-uppercase fw-bold">Prepárate</h6>
+        <h2 class="fw-bold">Consejos para tu visita</h2>
+    </div>
+    <div class="row g-4">
+        <div class="col-md-4"><div class="card h-100 border-0 shadow-sm"><div class="card-body"><h5><i class="bi bi-thermometer-snow text-success me-2"></i>Abrígate por capas</h5><p class="mb-0 text-body-secondary">En el páramo la temperatura baja con rapidez y el viento es fuerte. Lleva chaqueta cortaviento, gorro y guantes.</p></div></div></div>
+        <div class="col-md-4"><div class="card h-100 border-0 shadow-sm"><div class="card-body"><h5><i class="bi bi-droplet-half text-success me-2"></i>Hidrátate y aclimátate</h5><p class="mb-0 text-body-secondary">Bebe agua con frecuencia, camina despacio y descansa. El mal de altura puede aparecer sobre los 3.500 m.</p></div></div></div>
+        <div class="col-md-4"><div class="card h-100 border-0 shadow-sm"><div class="card-body"><h5><i class="bi bi-sun text-success me-2"></i>Protección solar</h5><p class="mb-0 text-body-secondary">La radiación UV es muy alta en la montaña. Usa bloqueador, lentes con filtro y sombrero.</p></div></div></div>
+    </div>
+</section>
+
+<!-- PREGUNTAS FRECUENTES -->
+<section id="preguntas" class="container my-5">
+    <div class="text-center mb-4">
+        <h6 class="text-success text-uppercase fw-bold">Resolvemos tus dudas</h6>
+        <h2 class="fw-bold">Preguntas frecuentes</h2>
+    </div>
+    <div class="accordion col-lg-8 mx-auto shadow-sm" id="faq">
+        <div class="accordion-item">
+            <h3 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#f1">¿Puedo cancelar mi reserva?</button></h3>
+            <div id="f1" class="accordion-collapse collapse show" data-bs-parent="#faq"><div class="accordion-body">Sí. Desde la sección «Mis reservas» puedes cancelarla en cualquier momento con tu código de confirmación.</div></div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f2">¿A partir de qué edad pueden participar los niños?</button></h3>
+            <div id="f2" class="accordion-collapse collapse" data-bs-parent="#faq"><div class="accordion-body">Desde los 5 años, siempre acompañados por un adulto. Pagan el 50 % de la tarifa.</div></div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f3">¿Qué pasa si el clima no permite la actividad?</button></h3>
+            <div id="f3" class="accordion-collapse collapse" data-bs-parent="#faq"><div class="accordion-body">Si el parque cierra rutas por clima o actividad volcánica, reprogramamos tu visita sin costo adicional.</div></div>
+        </div>
+        <div class="accordion-item">
+            <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f4">¿Qué debo llevar?</button></h3>
+            <div id="f4" class="accordion-collapse collapse" data-bs-parent="#faq"><div class="accordion-body">Calzado de montaña, ropa abrigada, impermeable, agua, protector solar, lentes y documento de identidad.</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- MIS RESERVAS -->
+<section id="misreservas" class="container my-5">
+    <div class="text-center mb-4">
+        <h6 class="text-success text-uppercase fw-bold">Historial</h6>
+        <h2 class="fw-bold">Mis reservas</h2>
+        <p class="text-body-secondary">Se guardan en este navegador.</p>
+    </div>
+    <div class="card border-0 shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-success">
+                    <tr><th>Código</th><th>Visitante</th><th>Experiencia</th><th>Fecha</th><th class="text-center">Personas</th><th class="text-end">Total</th><th></th></tr>
+                </thead>
+                <tbody id="tablaReservas"></tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- PIE DE PÁGINA -->
+<footer class="bg-success text-white text-center py-4 mt-5">
+    <div class="container">
+        <i class="bi bi-mountains text-warning fs-3"></i>
+        <h5 class="fw-bold mt-2">Parque Nacional Cotopaxi</h5>
+        <p class="mb-1">Descubre, disfruta y protege la belleza natural del Ecuador.</p>
+        <p class="small mb-0">© 2026 Cotopaxi Tour · Turismo responsable</p>
+    </div>
+</footer>
+
+<!-- MODAL DE CONFIRMACIÓN -->
+<div class="modal fade" id="modalOk" tabindex="-1" aria-labelledby="modalTitulo" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="modalTitulo"><i class="bi bi-check-circle-fill me-2"></i>¡Reserva confirmada!</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body" id="modalCuerpo"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-success" onclick="window.print()"><i class="bi bi-printer me-1"></i>Imprimir</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal">Entendido</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- AVISO -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="aviso" class="toast text-bg-dark" role="status" aria-live="polite" aria-atomic="true">
+        <div class="toast-body" id="avisoTexto"></div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // ===== CATÁLOGO (edita precios y textos aquí) =====
+    const TOURS = [
+        { id: "limpiopungo", nombre: "Laguna de Limpiopungo", dur: "4 horas", nivel: "Fácil", precio: 35, icono: "bi-water",
+          desc: "Caminata circular de unos 2 km a 3.800 m con vistas al volcán, aves andinas y caballos salvajes." },
+        { id: "refugio", nombre: "Ascenso al Refugio José Rivas", dur: "6 horas", nivel: "Exigente", precio: 55, icono: "bi-triangle-fill",
+          desc: "Sube hasta el refugio a 4.864 m por el arenal y siente de cerca el glaciar." },
+        { id: "ciclismo", nombre: "Ciclismo de montaña", dur: "5 horas", nivel: "Moderado", precio: 45, icono: "bi-bicycle",
+          desc: "Recorrido en bicicleta por caminos de páramo con bicicleta, casco y asistencia incluidos." },
+        { id: "cabalgata", nombre: "Cabalgata por el páramo", dur: "4 horas", nivel: "Fácil", precio: 40, icono: "bi-flower1",
+          desc: "Paseo a caballo con baqueano por llanuras de pajonal y bosques de pino." },
+        { id: "foto", nombre: "Fotografía al amanecer", dur: "5 horas", nivel: "Moderado", precio: 60, icono: "bi-camera",
+          desc: "Salida de madrugada para capturar el volcán con la mejor luz, con guía fotógrafo." }
+    ];
+    const EXTRAS = [
+        { id: "transporte", nombre: "Transporte desde Quito (ida y vuelta)", precio: 15, porPersona: true, icono: "bi-bus-front" },
+        { id: "almuerzo", nombre: "Almuerzo andino", precio: 10, porPersona: true, icono: "bi-cup-hot" },
+        { id: "guia", nombre: "Guía bilingüe español-inglés", precio: 20, porPersona: false, icono: "bi-translate" },
+        { id: "fotos", nombre: "Álbum de fotos profesionales", precio: 12, porPersona: false, icono: "bi-images" }
+    ];
+    const NIVEL_COLOR = { "Fácil": "success", "Moderado": "warning", "Exigente": "danger" };
+    const CLAVE = "reservasCotopaxi";
+
+    const $ = id => document.getElementById(id);
+    const dinero = n => "$" + n.toFixed(2).replace(".", ",");
+    const form = $("formReserva");
+
+    // ===== ALMACENAMIENTO =====
+    function leer() { try { return JSON.parse(localStorage.getItem(CLAVE)) || []; } catch (e) { return []; } }
+    function guardar(lista) { try { localStorage.setItem(CLAVE, JSON.stringify(lista)); } catch (e) {} }
+    let reservas = leer();
+
+    // ===== CONSTRUCCIÓN DE LA PÁGINA =====
+    $("listaTours").innerHTML = TOURS.map(t => `
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body d-flex flex-column">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <span class="bg-success text-white rounded-3 p-3 fs-3 lh-1"><i class="bi ${t.icono}"></i></span>
+                        <div>
+                            <h5 class="card-title mb-1">${t.nombre}</h5>
+                            <span class="badge text-bg-${NIVEL_COLOR[t.nivel]}">${t.nivel}</span>
+                            <span class="badge text-bg-light border"><i class="bi bi-clock me-1"></i>${t.dur}</span>
+                        </div>
+                    </div>
+                    <p class="card-text text-body-secondary">${t.desc}</p>
+                    <div class="mt-auto d-flex justify-content-between align-items-center">
+                        <span class="fs-4 fw-bold text-success">${dinero(t.precio)} <small class="fs-6 fw-normal text-body-secondary">/ adulto</small></span>
+                        <button type="button" class="btn btn-success rounded-pill" data-tour="${t.id}">Reservar</button>
+                    </div>
+                </div>
+            </div>
+        </div>`).join("");
+
+    $("tour").innerHTML = '<option value="" selected disabled>Selecciona una experiencia</option>' +
+        TOURS.map(t => `<option value="${t.id}">${t.nombre} · ${dinero(t.precio)}</option>`).join("");
+
+    $("extras").innerHTML = EXTRAS.map(e => `
+        <div class="col-md-6">
+            <div class="form-check border rounded-3 p-3 ps-5">
+                <input class="form-check-input extra" type="checkbox" id="ex-${e.id}" value="${e.id}">
+                <label class="form-check-label w-100" for="ex-${e.id}">
+                    <i class="bi ${e.icono} me-1"></i>${e.nombre}
+                    <span class="d-block small text-body-secondary">${dinero(e.precio)} ${e.porPersona ? "por persona" : "por grupo"}</span>
+                </label>
+            </div>
+        </div>`).join("");
+
+    document.querySelectorAll("[data-tour]").forEach(b => b.addEventListener("click", () => {
+        $("tour").value = b.dataset.tour;
+        actualizar();
+        $("reservar").scrollIntoView({ behavior: "smooth" });
+    }));
+
+    // Fecha mínima: hoy (hora local)
+    function hoyLocal() { const h = new Date(); return new Date(h.getTime() - h.getTimezoneOffset() * 60000).toISOString().split("T")[0]; }
+    $("fecha").min = hoyLocal();
+
+    // ===== CÁLCULO =====
+    function calcular() {
+        const tour = TOURS.find(t => t.id === $("tour").value);
+        const ad = Math.max(0, parseInt($("adultos").value) || 0);
+        const ni = Math.max(0, parseInt($("ninos").value) || 0);
+        const pers = ad + ni;
+        const lineas = [];
+        let total = 0;
+        if (tour) {
+            const sub = tour.precio * ad + tour.precio * 0.5 * ni;
+            total += sub;
+            lineas.push([tour.nombre, `${ad} adulto(s)` + (ni ? ` + ${ni} niño(s)` : ""), sub]);
+        }
+        const extras = [...document.querySelectorAll(".extra:checked")].map(c => EXTRAS.find(e => e.id === c.value));
+        extras.forEach(e => {
+            const sub = e.precio * (e.porPersona ? pers : 1);
+            total += sub;
+            lineas.push([e.nombre, e.porPersona ? `${pers} persona(s)` : "Grupo", sub]);
+        });
+        return { tour, ad, ni, pers, lineas, extras, total };
+    }
+
+    function actualizar() {
+        const c = calcular();
+        $("resumen").innerHTML = c.lineas.length
+            ? c.lineas.map(l => `<li class="list-group-item d-flex justify-content-between"><div>${l[0]}<div class="small text-body-secondary">${l[1]}</div></div><span class="fw-semibold">${dinero(l[2])}</span></li>`).join("")
+            : '<li class="list-group-item text-body-secondary">Elige una experiencia para ver el detalle.</li>';
+        $("total").textContent = dinero(c.total);
+    }
+    form.addEventListener("input", actualizar);
+    form.addEventListener("change", actualizar);
+    form.addEventListener("reset", () => { form.classList.remove("was-validated"); setTimeout(actualizar, 0); });
+
+    // ===== ENVÍO =====
+    function codigo() { return "CTX-" + Date.now().toString(36).toUpperCase().slice(-5) + Math.floor(Math.random() * 90 + 10); }
+    function aviso(txt) { $("avisoTexto").textContent = txt; bootstrap.Toast.getOrCreateInstance($("aviso"), { delay: 3500 }).show(); }
+    const esc = s => String(s).replace(/[&<>"']/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m]));
+
+    form.addEventListener("submit", ev => {
+        ev.preventDefault();
+        const c = calcular();
+        if ($("fecha").value && $("fecha").value < hoyLocal()) $("fecha").setCustomValidity("Fecha pasada"); else $("fecha").setCustomValidity("");
+        if (!form.checkValidity() || c.ad < 1) { form.classList.add("was-validated"); aviso("Revisa los campos marcados en rojo."); return; }
+
+        const r = {
+            codigo: codigo(), nombre: $("nombre").value.trim(), email: $("email").value.trim(), telefono: $("telefono").value,
+            procedencia: $("procedencia").value, tour: c.tour.nombre, fecha: $("fecha").value, hora: $("hora").value,
+            adultos: c.ad, ninos: c.ni, extras: c.extras.map(e => e.nombre), notas: $("notas").value.trim(), total: c.total
+        };
+        reservas.unshift(r);
+        guardar(reservas);
+        pintarTabla();
+
+        $("modalCuerpo").innerHTML = `
+            <p>Gracias, <strong>${esc(r.nombre)}</strong>. Guarda tu código de confirmación:</p>
+            <p class="display-6 fw-bold text-success text-center">${r.codigo}</p>
+            <ul class="list-unstyled mb-0">
+                <li><i class="bi bi-signpost-split text-success me-2"></i>${esc(r.tour)}</li>
+                <li><i class="bi bi-calendar-event text-success me-2"></i>${fechaLarga(r.fecha)} a las ${r.hora}</li>
+                <li><i class="bi bi-people text-success me-2"></i>${r.adultos} adulto(s), ${r.ninos} niño(s)</li>
+                ${r.extras.length ? `<li><i class="bi bi-plus-circle text-success me-2"></i>${r.extras.map(esc).join(", ")}</li>` : ""}
+                <li><i class="bi bi-cash-coin text-success me-2"></i>Total a pagar: <strong>${dinero(r.total)}</strong></li>
+            </ul>`;
+        bootstrap.Modal.getOrCreateInstance($("modalOk")).show();
+        form.reset();
+    });
+
+    // ===== TABLA DE RESERVAS =====
+    function fechaLarga(iso) {
+        const [a, m, d] = iso.split("-").map(Number);
+        return new Date(a, m - 1, d).toLocaleDateString("es-EC", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+    }
+    function pintarTabla() {
+        $("contador").textContent = reservas.length;
+        $("tablaReservas").innerHTML = reservas.length ? reservas.map(r => `
+            <tr>
+                <td class="fw-bold text-success">${r.codigo}</td>
+                <td>${esc(r.nombre)}<div class="small text-body-secondary">${esc(r.email)}</div></td>
+                <td>${esc(r.tour)}</td>
+                <td>${r.fecha.split("-").reverse().join("/")} · ${r.hora}</td>
+                <td class="text-center">${r.adultos + r.ninos}</td>
+                <td class="text-end fw-semibold">${dinero(r.total)}</td>
+                <td class="text-end"><button type="button" class="btn btn-sm btn-outline-danger" data-cancelar="${r.codigo}"><i class="bi bi-trash"></i> Cancelar</button></td>
+            </tr>`).join("")
+            : '<tr><td colspan="7" class="text-center text-body-secondary py-4">Aún no tienes reservas.</td></tr>';
+    }
+    $("tablaReservas").addEventListener("click", ev => {
+        const b = ev.target.closest("[data-cancelar]");
+        if (!b || !confirm("¿Seguro que deseas cancelar la reserva " + b.dataset.cancelar + "?")) return;
+        reservas = reservas.filter(r => r.codigo !== b.dataset.cancelar);
+        guardar(reservas);
+        pintarTabla();
+        aviso("Reserva cancelada correctamente.");
+    });
+
+    actualizar();
+    pintarTabla();
+</script>
+</body>
+</html>
